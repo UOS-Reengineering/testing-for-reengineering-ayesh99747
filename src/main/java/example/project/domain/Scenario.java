@@ -25,4 +25,33 @@ public class Scenario {
         // parse scenarioDescription and save the result to the class attributes
         // not implemented
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        // Let's define our equality as follows:
+        // (1) roadType and weatherCondition must be the same.
+        // (2) If Euclidean distance between the egoCar and car-in-front is less than 0.05,
+        //      then they are equal in terms of car positions.
+
+        /*
+            How to calculate Euclidean Distance
+            (initEgoCarPos_x1 - initEgoCarPos_x2)^2 + (initEgoCarPos_y1 - initEgoCarPos_y2)^2
+
+         */
+        if (obj == null)
+            return false;
+
+
+        Scenario scenario = (Scenario) obj;
+
+        float x1_x2 = initCarInFrontPos.get(0)-scenario.initCarInFrontPos.get(0);
+        float y1_y2 = initCarInFrontPos.get(1)-scenario.initCarInFrontPos.get(1);
+        double euclideanDistance = Math.sqrt((x1_x2*x1_x2) + (y1_y2*y1_y2));
+
+        return roadType.equals(scenario.roadType)
+                && weatherCondition.equals(scenario.weatherCondition)
+                && euclideanDistance < 0.05;
+    }
+
+
 }
